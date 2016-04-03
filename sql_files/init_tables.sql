@@ -1,23 +1,73 @@
 insert into Customer (UserName, Address)
-values ('Finkakor AB', 'Helsingborg');
+values ('Finkakor AB', 'Helsingborg'),
+        ('Småbröd AB', 'Malmö'),
+        ('Kaffebröd AB', 'Landskrona'),
+        ('Bjudkakor AB', 'Ystad'),
+        ('Kalaskakor AB', 'Trelleborg'),
+        ('Partykakor AB', 'Kristianstad'),
+        ('Gästkakor AB', 'Hässleholm'),
+        ('Skånekakor AB', 'Perstorp');
 
-insert into Customer (UserName, Address)
-values ('Småbröd AB', 'Malmö');
+insert into Cookie
+values ('Nut ring'),
+        ('Nut cookie'),
+        ('Amneris'),
+        ('Tango'),
+        ('Almond delight'),
+        ('Berliner');
 
-insert into Customer (UserName, Address)
-values ('Kaffebröd AB', 'Landskrona');
+insert into RecipeItem (CookieName, IngredientName, Amount)
+values ('Nut ring','Flour', 450),
+        ('Nut ring','Butter', 450),
+        ('Nut ring','Icing sugar', 190),
+        ('Nut ring','Roasted, chopped nuts', 225),
+        ('Nut cookie','Fine-ground nuts', 750),
+        ('Nut cookie','Ground, roasted nuts', 625),
+        ('Nut cookie','Bread crumbs', 125),
+        ('Nut cookie','Sugar', 375),
+        ('Nut cookie','Egg whites', 3.5),
+        ('Nut cookie','Chocolate', 50),
+        ('Amneris','Marzipan', 750),
+        ('Amneris','Butter', 250),
+        ('Amneris','Eggs', 250),
+        ('Amneris','Potato starch', 25),
+        ('Amneris','Wheat flour', 25),
+        ('Tango','Butter', 200),
+        ('Tango','Sugar', 250),
+        ('Tango','Flour', 300),
+        ('Tango','Sodium bicarbonate', 4),
+        ('Tango','Vanilla', 2),
+        ('Almond delight','Butter', 400),
+        ('Almond delight','Sugar', 270),
+        ('Almond delight','Chopped almonds', 279),
+        ('Almond delight','Flour', 400),
+        ('Almond delight','Cinnamon', 10),
+        ('Berliner','Flour', 350),
+        ('Berliner','Butter', 250),
+        ('Berliner','Icing sugar', 100),
+        ('Berliner','Eggs', 50),
+        ('Berliner','Vanilla sugar', 5);
+        ('Berliner','Chocolate', 50),
 
-insert into Customer (UserName, Address)
-values ('Bjudkakor AB', 'Ystad');
 
-insert into Customer (UserName, Address)
-values ('Kalaskakor AB', 'Trelleborg');
 
-insert into Customer (UserName, Address)
-values ('Partykakor AB', 'Kristianstad');
-
-insert into Customer (UserName, Address)
-values ('Gästkakor AB', 'Hässleholm');
-
-insert into Customer (UserName, Address)
-values ('Skånekakor AB', 'Perstorp');
+insert into Ingredient (IngredientName, AmountLeft)
+values ('Flour', 10000),
+        ('Butter', 10000),
+        ('Icing sugar', 10000),
+        ('Roasted, chopped nuts', 10000),
+        ('Fine-ground nuts', 10000),
+        ('Ground, roasted nuts', 10000),
+        ('Bread crumbs', 10000),
+        ('Sugar', 10000),
+        ('Egg whites', 100),
+        ('Chocolate', 1000),
+        ('Marzipan', 1000),
+        ('Eggs', 10000),
+        ('Potato starch', 10000),
+        ('Wheat flour', 1000),
+        ('Sodium bicarbonate', 100),
+        ('Vanilla', 100),
+        ('Chopped almonds', 10000),
+        ('Cinnamon', 100),
+        ('Vanilla sugar', 100);
