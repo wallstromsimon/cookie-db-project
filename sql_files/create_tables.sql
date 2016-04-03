@@ -1,3 +1,14 @@
+set foreign_key_checks = 0;
+drop table if exists Ingredient;
+drop table if exists RecipeItem;
+drop table if exists Cookie;
+drop table if exists Pallet;
+drop table if exists Orders;
+drop table if exists DeliverdItem;
+drop table if exists Customer;
+drop table if exists OrderedItem;
+
+
 create table Ingredient(
     IngredientName  varchar(30),
     AmountLeft      int,
@@ -20,6 +31,16 @@ create table Cookie(
     foreign key (CookieName) references RecipeItem(CookieName)
     );
 
+create table DeliverdItem(
+    PalletID        int,
+    OrderID         int,
+    CustomerName    varchar(30),
+    DeliveryDate    date,
+    primary key (PalletID, OrderID),
+    foreign key (PalletID) references Pallet(PalletID),
+    foreign key (OrderID) references Orders(OrderID)
+    );
+
 create table Pallet(
     PalletID    int,
     CookieName  varchar(30),
@@ -30,23 +51,15 @@ create table Pallet(
     foreign key (PalletID) references DeliverdItem(PalletID)
     );
 
-create table DeliverdItem(
-    PalletID        int,
-    OrderID         int,
-    CustomerName    varchar(30),
-    DeliveryDate    date,
-    primary key (PalletID,OrderID),
-    foreign key (PalletID) references Pallet(PalletID),
-    foreign key (OrderID) references Order(OrderID)
-    );
-
-create table Order(
+create table Orders(
     OrderID         int,
     Customer        varchar(30),
     DeliveryDate    date,
     primary key (OrderID),
     foreign key (OrderID) references DeliverdItem(OrderID)
     );
+
+
 
 create table Customer(
     UserName    varchar(30),
@@ -58,8 +71,8 @@ create table OrderedItem(
     OrderID         int,
     CookieName      varchar(30),
     NbrPallets      int,
-    primary key (OrderID,CookieName),
-    foreign key (OrderID) references Order(OrderID)
-    foreign key (CookieName) references Cookie(CookieName)
+    primary key (OrderID, CookieName),
+    foreign key (OrderID) references Orders(OrderID)
     );    
 
+set foreign_key_checks = 1;
