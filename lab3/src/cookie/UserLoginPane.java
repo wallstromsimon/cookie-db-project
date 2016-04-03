@@ -1,4 +1,4 @@
-package dbtLab3;
+package cookie;
 
 import javax.swing.*;
 import java.awt.event.*;

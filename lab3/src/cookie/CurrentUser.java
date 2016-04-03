@@ -1,4 +1,4 @@
-package dbtLab3;
+package cookie;
 
 /**
  * CurrentUser represents the current user that has logged on to
