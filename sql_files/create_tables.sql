@@ -11,17 +11,18 @@ drop table if exists OrderedItem;
 
 create table Ingredient(
     IngredientName  varchar(30),
-    AmountLeft      int,
+    AmountLeft      int not null,
     primary key (IngredientName)
     );
 
 create table RecipeItem(
     CookieName      varchar(30),
     IngredientName  varchar(30),
-    Amount          int,
+    Amount          int not null,
     primary key (CookieName, IngredientName),
     foreign key (CookieName) references Cookie(CookieName),
-    foreign key (IngredientName) references Ingredient(IngredientName)
+    foreign key (IngredientName) references Ingredient(IngredientName),
+    constraint uniqueNames unique (CookieName, IngredientName)
     );
 
 create table Cookie(
@@ -69,5 +70,3 @@ create table OrderedItem(
     primary key (OrderID, CookieName),
     foreign key (OrderID) references Orders(OrderID)
     );    
-
-set foreign_key_checks = 1;
