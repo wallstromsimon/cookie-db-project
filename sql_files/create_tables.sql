@@ -11,24 +11,23 @@ drop table if exists OrderedItem;
 
 create table Ingredient(
     IngredientName  varchar(30),
-    AmountLeft      int,
-    primary key (IngredientName),
-    foreign key (IngredientName) references RecipeItem(IngredientName) 
+    AmountLeft      int not null,
+    primary key (IngredientName)
     );
 
 create table RecipeItem(
-    CookieName      varchar(30),
-    IngredientName  varchar(30),
-    Amount          int,
+    CookieName      varchar(30) not null,
+    IngredientName  varchar(30) not null,
+    Amount          int not null,
     primary key (CookieName, IngredientName),
     foreign key (CookieName) references Cookie(CookieName),
-    foreign key (IngredientName) references Ingredient(IngredientName)
+    foreign key (IngredientName) references Ingredient(IngredientName),
+    constraint uniqueNames unique (CookieName, IngredientName)
     );
 
 create table Cookie(
     CookieName  varchar(30),
-    primary key (CookieName),
-    foreign key (CookieName) references RecipeItem(CookieName)
+    primary key (CookieName)
     );
 
 create table DeliverdItem(
@@ -42,37 +41,32 @@ create table DeliverdItem(
     );
 
 create table Pallet(
-    PalletID    int,
-    CookieName  varchar(30),
+    PalletID    int AUTO_INCREMENT,
+    CookieName  varchar(30) not null,
     DateMade    date,
     Blocked     Boolean,
     primary key (PalletID),
-    foreign key (CookieName) references Cookie(CookieName),
-    foreign key (PalletID) references DeliverdItem(PalletID)
+    foreign key (CookieName) references Cookie(CookieName)
     );
-
-create table Orders(
-    OrderID         int,
-    Customer        varchar(30),
-    DeliveryDate    date,
-    primary key (OrderID),
-    foreign key (OrderID) references DeliverdItem(OrderID)
-    );
-
-
 
 create table Customer(
     UserName    varchar(30),
-    Address     varchar(30),
+    Address     varchar(30) not null,
     primary key (UserName)
+    );
+
+create table Orders(
+    OrderID         int AUTO_INCREMENT,
+    Customer        varchar(30),
+    DeliveryDate    date,
+    primary key (OrderID),
+    foreign key (Customer) references Customer(UserName)
     );
 
 create table OrderedItem(
     OrderID         int,
     CookieName      varchar(30),
-    NbrPallets      int,
+    NbrPallets      int not null,
     primary key (OrderID, CookieName),
     foreign key (OrderID) references Orders(OrderID)
     );    
-
-set foreign_key_checks = 1;
