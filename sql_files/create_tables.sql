@@ -16,8 +16,8 @@ create table Ingredient(
     );
 
 create table RecipeItem(
-    CookieName      varchar(30),
-    IngredientName  varchar(30),
+    CookieName      varchar(30) not null,
+    IngredientName  varchar(30) not null,
     Amount          int not null,
     primary key (CookieName, IngredientName),
     foreign key (CookieName) references Cookie(CookieName),
@@ -41,8 +41,8 @@ create table DeliverdItem(
     );
 
 create table Pallet(
-    PalletID    int,
-    CookieName  varchar(30),
+    PalletID    int AUTO_INCREMENT,
+    CookieName  varchar(30) not null,
     DateMade    date,
     Blocked     Boolean,
     primary key (PalletID),
@@ -51,12 +51,12 @@ create table Pallet(
 
 create table Customer(
     UserName    varchar(30),
-    Address     varchar(30),
+    Address     varchar(30) not null,
     primary key (UserName)
     );
 
 create table Orders(
-    OrderID         int,
+    OrderID         int AUTO_INCREMENT,
     Customer        varchar(30),
     DeliveryDate    date,
     primary key (OrderID),
@@ -66,7 +66,7 @@ create table Orders(
 create table OrderedItem(
     OrderID         int,
     CookieName      varchar(30),
-    NbrPallets      int,
+    NbrPallets      int not null,
     primary key (OrderID, CookieName),
     foreign key (OrderID) references Orders(OrderID)
     );    
