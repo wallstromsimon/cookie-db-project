@@ -90,7 +90,7 @@ public class PalletStoragePane extends BasicPane {
 	 */
 	public JComponent createBottomPanel() {
 		JButton[] buttons = new JButton[1];
-		buttons[0] = new JButton("Nothing");
+		buttons[0] = new JButton("BLOCK??");
 		return new ButtonAndMessagePanel(buttons, messageLabel,
 				new ActionHandler());
 	}
@@ -141,13 +141,16 @@ public class PalletStoragePane extends BasicPane {
 			if (palletList.isSelectionEmpty()) {
 				return;
 			}
-			String ingrName = palletList.getSelectedValue();
+			String pIDcName = palletList.getSelectedValue();
 			/* --- insert own code here --- */
 			clearFields();
-			ArrayList<Ingredient> ingr = db.getIngredientList(); //Change this to get amount for one ingr?
-			for(Ingredient i : ingr){
-				if(ingrName.equals(i.iName)){
-					topField.add(new JLabel("We have " + Integer.toString(i.iAmount) + " *units* of " + i.iName +"."));
+			ArrayList<Pallet> pa = db.getPalletList(); //Change this to get amount for one ingr?
+			for(Pallet p : pa){
+				if(pIDcName.equals(p.palletID + " : " + p.cName)){
+					topField.add(new JLabel("Pallet " + Integer.toString(p.palletID)));
+					topField.add(new JLabel("Made: " + p.made.toString()));
+					topField.add(new JLabel("Contains: " + p.cName));
+					topField.add(new JLabel("Blocked: " ));
 				}
 			}
 		}
