@@ -84,6 +84,17 @@ public class Database {
 		return cList;
 	}
 
+	public ArrayList<Ingredient> getIngr(String cookieName){
+		//SQL to get all ingredients
+		ArrayList<Ingredient> ingr = new ArrayList<Ingredient>();
+		ingr.add(new Ingredient("klet", 2));
+		ingr.add(new Ingredient("smulor", 3));
+		ingr.add(new Ingredient("blod", 19));
+		ingr.add(new Ingredient("kaffe", 50000));
+		ingr.add(new Ingredient("Adam", 1));
+		return ingr;
+	}
+
 	/* Old code below here, remove when safe */
 
 	public boolean logIn(String userId) {

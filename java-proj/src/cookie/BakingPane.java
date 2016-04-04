@@ -30,6 +30,8 @@ public class BakingPane extends BasicPane {
 	 * The cookie name list.
 	 */
 	private JList<String> cookieList;
+	private JList<String> ingrList;
+
 
 	/**
 	 * The list model for the performance date list.
@@ -119,7 +121,7 @@ public class BakingPane extends BasicPane {
 	 * @return The top panel.
 	 */
 	public JComponent createTopPanel() {
-		String[] texts = new String[NBR_FIELDS];
+		/*String[] texts = new String[NBR_FIELDS];
 		texts[COOKIE] = "Cookie";
 		texts[INGREDIENTS] = "Ingredients";
 		texts[THEATER_NAME] = "Plays at";
@@ -132,17 +134,24 @@ public class BakingPane extends BasicPane {
 		}
 
 		JPanel input = new InputPanel(texts, fields);
+		*/
+
+		ingrList = new JList<String>(nameListModel);
+		ingrList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		ingrList.setPrototypeCellValue("123456789012");
+		JPanel p2 = new JPanel();
+
 
 		JPanel p1 = new JPanel();
 		p1.setLayout(new FlowLayout(FlowLayout.LEFT));
-		p1.add(new JLabel("Current user: "));
+		p1.add(new JLabel("Ingredients needed for a pallet:"));
 		currentUserNameLabel = new JLabel("");
-		p1.add(currentUserNameLabel);
+		//p1.add(currentUserNameLabel);
 
 		JPanel p = new JPanel();
 		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
 		p.add(p1);
-		p.add(input);
+		p.add(p2);
 		return p;
 	}
 
@@ -167,7 +176,7 @@ public class BakingPane extends BasicPane {
 		clearMessage();
 		currentUserNameLabel.setText(CurrentUser.instance().getCurrentUserId());
 		fillNameList();
-		clearFields();
+		//clearFields();
 	}
 
 	/**
@@ -176,7 +185,6 @@ public class BakingPane extends BasicPane {
 	private void fillNameList() {
 		nameListModel.removeAllElements();
 		/* --- insert own code here --- */
-		System.out.println("filling names");
 		ArrayList<String> movie = db.getCookies();
 		for(String name : movie){
 			nameListModel.addElement(name);
@@ -218,12 +226,32 @@ public class BakingPane extends BasicPane {
 				return;
 			}
 			dateListModel.removeAllElements();
-			String movieName = cookieList.getSelectedValue();
+			String cookieName = cookieList.getSelectedValue();
 			/* --- insert own code here --- */
-			ArrayList<String> dates = db.getDates(movieName);
-			for(String date : dates){
-				dateListModel.addElement(date);
+
+			ArrayList<Ingredient> ingr = db.getIngr(cookieName);
+
+			int nbrIngr = ingr.size();
+			for(Ingredient i : ingr){
+				//ingrList.addElement(i.iName); //HELP :(
 			}
+
+			/*fields = new JTextField[nbrIngr];
+
+			String[] texts = new String[nbrIngr];
+			for(int i = 0; i < nbrIngr; i++){
+				fields[i] = new JTextField(20);
+				fields[i].setEditable(false);
+				fields[i].setText(ingr.get(i).iName + ": amout/total");
+			}
+
+
+			JPanel input = new InputPanel(texts, fields);
+			//add fields to topPanel? Then remove instead of clear?
+			for(int i = 0; i < nbrIngr; i++){
+				//super.topPanel.add(fields[i]);
+			}*/
+			
 		}
 	}
 
