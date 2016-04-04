@@ -34,12 +34,16 @@ public class CookieGUI {
 		JFrame frame = new JFrame("CookieBaking");
 		tabbedPane = new JTabbedPane();
 
+		IngredientStoragePane ingredientStoragePane = new IngredientStoragePane(db);
+		tabbedPane.addTab("Storage", null, ingredientStoragePane,
+				"store that sugar");
+		
 		BakingPane bakingPane = new BakingPane(db);
 		tabbedPane.addTab("Bake", null, bakingPane,
 				"Bake ffs");
 
-		BookingPane bookingPane = new BookingPane(db);
-		tabbedPane.addTab("Book ticket", null, bookingPane, "Book a ticket");
+		PalletStoragePane palletStoragePane = new PalletStoragePane(db);
+		tabbedPane.addTab("Pallet storage", null, palletStoragePane, "Store a pallet");
 
 		tabbedPane.setSelectedIndex(0);
 
@@ -54,9 +58,9 @@ public class CookieGUI {
 		/* --- change code here --- */
 		/* --- change xxx to your user name, yyy to your password --- */
 		if (db.openConnection("db85", "bil123!")) {
-			bakingPane.displayMessage("Connected to database");
+			ingredientStoragePane.displayMessage("Connected to database");
 		} else {
-			bakingPane.displayMessage("Could not connect to database");
+			ingredientStoragePane.displayMessage("Could not connect to database");
 		}
 	}
 

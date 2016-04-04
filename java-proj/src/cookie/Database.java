@@ -3,6 +3,7 @@ package cookie;
 import java.awt.List;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  * Database is a class that specifies the interface to the movie database. Uses
@@ -94,6 +95,27 @@ public class Database {
 		ingr.add(new Ingredient("Adam", 1));
 		return ingr;
 	}
+	
+	public ArrayList<Ingredient> getIngredientList() {
+		ArrayList<Ingredient> ingr = new ArrayList<Ingredient>();
+		ingr.add(new Ingredient("klet", 20900000));
+		ingr.add(new Ingredient("smulor", 300000000));
+		ingr.add(new Ingredient("blod", 1900000000));
+		ingr.add(new Ingredient("kaffe", 500000000));
+		ingr.add(new Ingredient("Adam", 10000000));
+		return ingr;
+	}
+	
+	public ArrayList<Pallet> getPalletList() { //Only IDs enough?
+		ArrayList<Pallet> p = new ArrayList<Pallet>();
+		p.add(new Pallet(0, "Kaka0", new Date(2016, 2, 2), false));
+		p.add(new Pallet(1, "Kaka2", new Date(2016, 4, 2), false));
+		p.add(new Pallet(2, "Kaka5", new Date(2016, 5, 2), false));
+		return p;
+	}
+
+	
+	
 
 	/* Old code below here, remove when safe */
 
@@ -190,4 +212,7 @@ public class Database {
 		}
 		return ticketNbr;
 	}
+
+
+
 }

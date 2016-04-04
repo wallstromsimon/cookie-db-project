@@ -14,12 +14,8 @@ import java.util.ArrayList;
  * fields in the right panel. The bottom panel contains a button which the user
  * can click to book a ticket to the selected performance.
  */
-public class BakingPane extends BasicPane {
+public class PalletStoragePane extends BasicPane {
 	private static final long serialVersionUID = 1;
-	/**
-	 * A label showing the name of the current user.
-	 */
-	private JLabel currentUserNameLabel;
 
 	/**
 	 * The list model for the movie name list.
@@ -29,7 +25,7 @@ public class BakingPane extends BasicPane {
 	/**
 	 * The cookie name list.
 	 */
-	private JList<String> cookieList;
+	private JList<String> palletList;
 	
 	//JPanel for Top
 	private JPanel topField;  
@@ -41,7 +37,7 @@ public class BakingPane extends BasicPane {
 	 * @param db
 	 *            The database object.
 	 */
-	public BakingPane(Database db) {
+	public PalletStoragePane(Database db) {
 		super(db);
 		entryActions();
 	}
@@ -55,12 +51,11 @@ public class BakingPane extends BasicPane {
 	public JComponent createLeftPanel() {
 		nameListModel = new DefaultListModel<String>();
 
-		cookieList = new JList<String>(nameListModel);
-		cookieList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		cookieList.setPrototypeCellValue("123456789012");
-		cookieList.addListSelectionListener(new CookieSelectionListener());
-		JScrollPane p1 = new JScrollPane(cookieList);
-
+		palletList = new JList<String>(nameListModel);
+		palletList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		palletList.setPrototypeCellValue("123456789012");
+		palletList.addListSelectionListener(new CookieSelectionListener());
+		JScrollPane p1 = new JScrollPane(palletList);
 		JPanel p = new JPanel();
 		p.setLayout(new GridLayout(1, 2));
 		p.add(p1);
@@ -78,8 +73,7 @@ public class BakingPane extends BasicPane {
 		
 		JPanel p1 = new JPanel();
 		p1.setLayout(new FlowLayout(FlowLayout.LEFT));
-		p1.add(new JLabel("Ingredients needed for a pallet:"));
-		//currentUserNameLabel = new JLabel("");
+		//p1.add(new JLabel("Ingredients needed for a pallet:"));
 
 		JPanel p = new JPanel();
 		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
@@ -96,7 +90,7 @@ public class BakingPane extends BasicPane {
 	 */
 	public JComponent createBottomPanel() {
 		JButton[] buttons = new JButton[1];
-		buttons[0] = new JButton("Bake Pallet");
+		buttons[0] = new JButton("Nothing");
 		return new ButtonAndMessagePanel(buttons, messageLabel,
 				new ActionHandler());
 	}
@@ -107,7 +101,6 @@ public class BakingPane extends BasicPane {
 	 */
 	public void entryActions() {
 		clearMessage();
-		//currentUserNameLabel.setText(CurrentUser.instance().getCurrentUserId());
 		fillNameList();
 		clearFields();
 	}
@@ -118,9 +111,9 @@ public class BakingPane extends BasicPane {
 	private void fillNameList() {
 		nameListModel.removeAllElements();
 		/* --- insert own code here --- */
-		ArrayList<String> cookie = db.getCookies();
-		for(String name : cookie){
-			nameListModel.addElement(name);
+		ArrayList<Pallet> pa = db.getPalletList();
+		for(Pallet p : pa){
+			nameListModel.addElement(p.palletID + " : " + p.cName);
 		}
 	}
 
@@ -145,19 +138,17 @@ public class BakingPane extends BasicPane {
 		 *            The selected list item.
 		 */
 		public void valueChanged(ListSelectionEvent e) {
-			if (cookieList.isSelectionEmpty()) {
+			if (palletList.isSelectionEmpty()) {
 				return;
 			}
-			String cookieName = cookieList.getSelectedValue();
+			String ingrName = palletList.getSelectedValue();
 			/* --- insert own code here --- */
 			clearFields();
-			ArrayList<Ingredient> ingr = db.getIngr(cookieName);
+			ArrayList<Ingredient> ingr = db.getIngredientList(); //Change this to get amount for one ingr?
 			for(Ingredient i : ingr){
-				topField.add(new JLabel(i.iName + "(amount*15*10*36=" + Integer.toString(i.iAmount*15*10*36)));
-				/*s. The cookies are quick frozen and packaged
-				in bags, with 15 cookies in each bag. The bags are put in boxes, with 10 bags in each box.
-				The boxes are stacked on loading pallets, which are shrink-wrapped in plastic and labeled
-				with bar code labels. Each pallet contains 36 boxes, all containing the same product.*/
+				if(ingrName.equals(i.iName)){
+					topField.add(new JLabel("We have " + Integer.toString(i.iAmount) + " *units* of " + i.iName +"."));
+				}
 			}
 		}
 	}
@@ -175,7 +166,7 @@ public class BakingPane extends BasicPane {
 		 *            The event object (not used).
 		 */
 		public void actionPerformed(ActionEvent e) {
-			if (cookieList.isSelectionEmpty()) {
+			if (palletList.isSelectionEmpty()) {
 				return;
 			}
 			if (!db.isConnected()){
@@ -183,13 +174,13 @@ public class BakingPane extends BasicPane {
 				return;
 			}
 			
-			String cookieName = cookieList.getSelectedValue(); //Needed for db
+			String cookieName = palletList.getSelectedValue(); //Needed for db
 			
 			if(true){ //  enough ingredients
-				displayMessage("BAKE THAT COOKIE BITCH");
+				displayMessage("Nothing");
 				//DB call to update ingredient list and pallet storage
 			}else{
-				displayMessage("Baking unsuccessfull, ingredients unavailable");
+				displayMessage("Nothing");
 			}
 		}
 	}
