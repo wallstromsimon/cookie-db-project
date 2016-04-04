@@ -8,6 +8,6 @@ package cookie;
 public class MovieBooking {
     public static void main(String[] args) {
         Database db = new Database();
-        new MovieGUI(db);
+        new CookieGUI(db);
     }
 }

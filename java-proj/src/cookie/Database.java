@@ -74,6 +74,18 @@ public class Database {
 	
 	/* --- insert own code here --- */
 
+	public ArrayList<String> getCookies(){
+		//SQL To get name of all cookies.
+		ArrayList<String> cList = new ArrayList<String>();
+		cList.add("Kaka0");
+		cList.add("Kaka1");
+		cList.add("Kaka2");
+		cList.add("Kaka3");
+		return cList;
+	}
+
+	/* Old code below here, remove when safe */
+
 	public boolean logIn(String userId) {
 		boolean exists = false; //User exist in db
 		try {
