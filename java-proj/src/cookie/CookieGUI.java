@@ -31,7 +31,7 @@ public class CookieGUI {
 	public CookieGUI(Database db) {
 		this.db = db;
 
-		JFrame frame = new JFrame("MovieBooking");
+		JFrame frame = new JFrame("CookieBaking");
 		tabbedPane = new JTabbedPane();
 
 		BakingPane bakingPane = new BakingPane(db);

@@ -30,48 +30,10 @@ public class BakingPane extends BasicPane {
 	 * The cookie name list.
 	 */
 	private JList<String> cookieList;
-	private JList<String> ingrList;
+	
+	//JPanel for Top
+	private JPanel topField;  
 
-
-	/**
-	 * The list model for the performance date list.
-	 */
-	private DefaultListModel<String> dateListModel;
-
-	/**
-	 * The performance date list.
-	 */
-	private JList<String> dateList;
-
-	/**
-	 * The text fields where the movie data is shown.
-	 */
-	private JTextField[] fields;
-
-	/**
-	 * The number of the movie name field.
-	 */
-	private static final int COOKIE = 0;
-
-	/**
-	 * The number of the performance date field.
-	 */
-	private static final int INGREDIENTS = 1;
-
-	/**
-	 * The number of the movie theater field.
-	 */
-	private static final int THEATER_NAME = 2;
-
-	/**
-	 * The number of the 'number of free seats' field.
-	 */
-	private static final int FREE_SEATS = 3;
-
-	/**
-	 * The total number of fields.
-	 */
-	private static final int NBR_FIELDS = 4;
 
 	/**
 	 * Create the booking pane.
@@ -121,37 +83,18 @@ public class BakingPane extends BasicPane {
 	 * @return The top panel.
 	 */
 	public JComponent createTopPanel() {
-		/*String[] texts = new String[NBR_FIELDS];
-		texts[COOKIE] = "Cookie";
-		texts[INGREDIENTS] = "Ingredients";
-		texts[THEATER_NAME] = "Plays at";
-		texts[FREE_SEATS] = "Free seats";
-
-		fields = new JTextField[NBR_FIELDS];
-		for (int i = 0; i < fields.length; i++) {
-			fields[i] = new JTextField(20);
-			fields[i].setEditable(false);
-		}
-
-		JPanel input = new InputPanel(texts, fields);
-		*/
-
-		ingrList = new JList<String>(nameListModel);
-		ingrList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		ingrList.setPrototypeCellValue("123456789012");
-		JPanel p2 = new JPanel();
-
-
+		topField = new JPanel();
+		topField.setLayout(new BoxLayout(topField, BoxLayout.PAGE_AXIS));
+		
 		JPanel p1 = new JPanel();
 		p1.setLayout(new FlowLayout(FlowLayout.LEFT));
 		p1.add(new JLabel("Ingredients needed for a pallet:"));
 		currentUserNameLabel = new JLabel("");
-		//p1.add(currentUserNameLabel);
 
 		JPanel p = new JPanel();
 		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
 		p.add(p1);
-		p.add(p2);
+		p.add(topField);
 		return p;
 	}
 
@@ -163,7 +106,7 @@ public class BakingPane extends BasicPane {
 	 */
 	public JComponent createBottomPanel() {
 		JButton[] buttons = new JButton[1];
-		buttons[0] = new JButton("Book ticket");
+		buttons[0] = new JButton("Bake Pallet");
 		return new ButtonAndMessagePanel(buttons, messageLabel,
 				new ActionHandler());
 	}
@@ -176,7 +119,7 @@ public class BakingPane extends BasicPane {
 		clearMessage();
 		currentUserNameLabel.setText(CurrentUser.instance().getCurrentUserId());
 		fillNameList();
-		//clearFields();
+		clearFields();
 	}
 
 	/**
@@ -185,28 +128,17 @@ public class BakingPane extends BasicPane {
 	private void fillNameList() {
 		nameListModel.removeAllElements();
 		/* --- insert own code here --- */
-		ArrayList<String> movie = db.getCookies();
-		for(String name : movie){
+		ArrayList<String> cookie = db.getCookies();
+		for(String name : cookie){
 			nameListModel.addElement(name);
 		}
-	}
-
-	/**
-	 * Fetch performance dates from the database and display them in the date
-	 * list.
-	 */
-	private void fillDateList() {
-		dateListModel.removeAllElements();
-		/* --- insert own code here --- */ //Whaaaaaat?
 	}
 
 	/**
 	 * Clear all text fields.
 	 */
 	private void clearFields() {
-		for (int i = 0; i < fields.length; i++) {
-			fields[i].setText("");
-		}
+		topField.removeAll();
 	}
 
 	/**
@@ -225,61 +157,13 @@ public class BakingPane extends BasicPane {
 			if (cookieList.isSelectionEmpty()) {
 				return;
 			}
-			dateListModel.removeAllElements();
 			String cookieName = cookieList.getSelectedValue();
 			/* --- insert own code here --- */
-
-			ArrayList<Ingredient> ingr = db.getIngr(cookieName);
-
-			int nbrIngr = ingr.size();
-			for(Ingredient i : ingr){
-				//ingrList.addElement(i.iName); //HELP :(
-			}
-
-			/*fields = new JTextField[nbrIngr];
-
-			String[] texts = new String[nbrIngr];
-			for(int i = 0; i < nbrIngr; i++){
-				fields[i] = new JTextField(20);
-				fields[i].setEditable(false);
-				fields[i].setText(ingr.get(i).iName + ": amout/total");
-			}
-
-
-			JPanel input = new InputPanel(texts, fields);
-			//add fields to topPanel? Then remove instead of clear?
-			for(int i = 0; i < nbrIngr; i++){
-				//super.topPanel.add(fields[i]);
-			}*/
-			
-		}
-	}
-
-	/**
-	 * A class that listens for clicks in the date list.
-	 */
-	class DateSelectionListener implements ListSelectionListener {
-		/**
-		 * Called when the user selects a name in the date list. Fetches
-		 * performance data from the database and displays it in the text
-		 * fields.
-		 * 
-		 * @param e
-		 *            The selected list item.
-		 */
-		public void valueChanged(ListSelectionEvent e) {
-			if (cookieList.isSelectionEmpty() || dateList.isSelectionEmpty()) {
-				return;
-			}
-			String movieName = cookieList.getSelectedValue();
-			String date = dateList.getSelectedValue();
-			/* --- insert own code here --- */
 			clearFields();
-			Performance p = db.getPerformance(movieName,date);
-			fields[COOKIE].setText(p.mName);
-			fields[THEATER_NAME].setText(p.tName);
-			fields[INGREDIENTS].setText(p.date);
-			fields[FREE_SEATS].setText(Integer.toString(p.seatsLeft));
+			ArrayList<Ingredient> ingr = db.getIngr(cookieName);
+			for(Ingredient i : ingr){
+				topField.add(new JLabel(i.iName));
+			}
 		}
 	}
 
@@ -296,21 +180,18 @@ public class BakingPane extends BasicPane {
 		 *            The event object (not used).
 		 */
 		public void actionPerformed(ActionEvent e) {
-			if (cookieList.isSelectionEmpty() || dateList.isSelectionEmpty()) {
+			if (cookieList.isSelectionEmpty()) {
 				return;
 			}
-			if (!CurrentUser.instance().isLoggedIn()) {
+			if (!db.isConnected()){
 				displayMessage("Must login first");
 				return;
 			}
-			String movieName = cookieList.getSelectedValue();
-			String date = dateList.getSelectedValue();
+			String cookieName = cookieList.getSelectedValue();
+			clearFields();
 			/* --- insert own code here --- */
-			int ticketNbr = db.book(movieName, date);
-			if(ticketNbr >= 0){ //  -1 for error
-				displayMessage("One ticket booked, Booking number: " + ticketNbr);
-				fields[FREE_SEATS].setText(Integer.toString(Integer.parseInt(fields[FREE_SEATS].getText()) - 1));
-				
+			if(true){ //  -1 for error
+				displayMessage("BAKE THAT COOKIE BITCH");
 			}else{
 				displayMessage("Booking unsuccessfull, no seats available");
 			}
