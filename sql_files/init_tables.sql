@@ -46,8 +46,8 @@ values ('Nut ring','Flour', 450),
         ('Berliner','Butter', 250),
         ('Berliner','Icing sugar', 100),
         ('Berliner','Eggs', 50),
-        ('Berliner','Vanilla sugar', 5);
-        ('Berliner','Chocolate', 50),
+        ('Berliner','Vanilla sugar', 5),
+        ('Berliner','Chocolate', 50);
 
 
 

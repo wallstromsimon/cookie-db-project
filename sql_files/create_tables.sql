@@ -12,8 +12,7 @@ drop table if exists OrderedItem;
 create table Ingredient(
     IngredientName  varchar(30),
     AmountLeft      int,
-    primary key (IngredientName),
-    foreign key (IngredientName) references RecipeItem(IngredientName) 
+    primary key (IngredientName)
     );
 
 create table RecipeItem(
@@ -27,8 +26,7 @@ create table RecipeItem(
 
 create table Cookie(
     CookieName  varchar(30),
-    primary key (CookieName),
-    foreign key (CookieName) references RecipeItem(CookieName)
+    primary key (CookieName)
     );
 
 create table DeliverdItem(
@@ -47,8 +45,13 @@ create table Pallet(
     DateMade    date,
     Blocked     Boolean,
     primary key (PalletID),
-    foreign key (CookieName) references Cookie(CookieName),
-    foreign key (PalletID) references DeliverdItem(PalletID)
+    foreign key (CookieName) references Cookie(CookieName)
+    );
+
+create table Customer(
+    UserName    varchar(30),
+    Address     varchar(30),
+    primary key (UserName)
     );
 
 create table Orders(
@@ -56,15 +59,7 @@ create table Orders(
     Customer        varchar(30),
     DeliveryDate    date,
     primary key (OrderID),
-    foreign key (OrderID) references DeliverdItem(OrderID)
-    );
-
-
-
-create table Customer(
-    UserName    varchar(30),
-    Address     varchar(30),
-    primary key (UserName)
+    foreign key (Customer) references Customer(UserName)
     );
 
 create table OrderedItem(
