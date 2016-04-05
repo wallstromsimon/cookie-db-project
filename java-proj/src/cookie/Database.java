@@ -1,6 +1,5 @@
 package cookie;
 
-import java.awt.List;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -73,7 +72,7 @@ public class Database {
 		return conn != null;
 	}
 	
-	/* --- insert own code here --- */
+	/* --- insert own code here --- remember to close conn!*/
 
 	public ArrayList<String> getCookies(){
 		//SQL To get name of all cookies.
@@ -106,6 +105,7 @@ public class Database {
 		return ingr;
 	}
 	
+	@SuppressWarnings("deprecation")
 	public ArrayList<Pallet> getPalletList() { //Only IDs enough?
 		ArrayList<Pallet> p = new ArrayList<Pallet>();
 		p.add(new Pallet(0, "Kaka0", new Date(2016, 2, 2), false));
@@ -117,7 +117,7 @@ public class Database {
 	
 	
 
-	/* Old code below here, remove when safe */
+	/* Old code below, Keep as ref and then remove
 
 	public boolean logIn(String userId) {
 		boolean exists = false; //User exist in db
@@ -133,9 +133,9 @@ public class Database {
 		}
 		
 		if(exists){ 
-			CurrentUser.instance().loginAs(userId);
+//			CurrentUser.instance().loginAs(userId);
 		}else{
-			CurrentUser.instance().loginAs(null);
+//			CurrentUser.instance().loginAs(null);
 		}
 		return exists;
 	}
@@ -153,7 +153,7 @@ public class Database {
 			e.printStackTrace();
 		} finally{
 			try {
-				listMovies.close();
+				listMovies.close();                       <-------------------Close like this!
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
@@ -198,7 +198,7 @@ public class Database {
 			int seatsLeft = booking.getInt("seatCount");
 			if(seatsLeft > 0){
 				transaction.executeUpdate("UPDATE Performance SET seatCount = " + (seatsLeft - 1) + " WHERE pDate = '" + date + "'" + " AND mName = '" + movieName + "'");
-				transaction.executeUpdate("INSERT into Tickets values(0, '" + CurrentUser.instance().getCurrentUserId() + "', '" + movieName + "', '" + date + "')");
+//				transaction.executeUpdate("INSERT into Tickets values(0, '" + CurrentUser.instance().getCurrentUserId() + "', '" + movieName + "', '" + date + "')");
 				booking = transaction.executeQuery("SELECT last_insert_id() AS id");
 				booking.next();
 				ticketNbr = booking.getInt("id");
@@ -212,7 +212,7 @@ public class Database {
 		}
 		return ticketNbr;
 	}
-
+ */
 
 
 }
