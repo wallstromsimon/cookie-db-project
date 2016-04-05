@@ -84,7 +84,7 @@ public class Database {
 		return cList;
 	}
 
-	public ArrayList<Ingredient> getIngr(String cookieName){
+	public ArrayList<Ingredient> getIngredients(String cookieName){
 		//SQL to get all ingredients
 		ArrayList<Ingredient> ingr = new ArrayList<Ingredient>();
 		ingr.add(new Ingredient("klet", 2));
@@ -112,6 +112,10 @@ public class Database {
 		p.add(new Pallet(1, "Kaka2", new Date(2016, 4, 2), false));
 		p.add(new Pallet(2, "Kaka5", new Date(2016, 5, 2), false));
 		return p;
+	}
+
+	public Ingredient getIngredient(String ingrName) {
+		return new Ingredient("Adam", 10000000);
 	}
 
 	

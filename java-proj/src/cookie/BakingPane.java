@@ -151,7 +151,7 @@ public class BakingPane extends BasicPane {
 			String cookieName = cookieList.getSelectedValue();
 			/* --- insert own code here --- */
 			clearFields();
-			ArrayList<Ingredient> ingr = db.getIngr(cookieName);
+			ArrayList<Ingredient> ingr = db.getIngredients(cookieName);
 			for(Ingredient i : ingr){
 				topField.add(new JLabel(i.iName + "(amount*15*10*36=" + Integer.toString(i.iAmount*15*10*36)));
 				/*s. The cookies are quick frozen and packaged

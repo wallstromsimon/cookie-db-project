@@ -104,6 +104,7 @@ public class BasicPane extends JPanel {
      */
     public void displayMessage(String msg) {
         messageLabel.setText(msg);
+        messageLabel.revalidate();
     }
         
     /**
