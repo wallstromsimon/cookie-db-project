@@ -107,7 +107,6 @@ public class BakingPane extends BasicPane {
 	 */
 	public void entryActions() {
 		clearMessage();
-		//currentUserNameLabel.setText(CurrentUser.instance().getCurrentUserId());
 		fillNameList();
 		clearFields();
 	}
@@ -117,7 +116,6 @@ public class BakingPane extends BasicPane {
 	 */
 	private void fillNameList() {
 		nameListModel.removeAllElements();
-		/* --- insert own code here --- */
 		ArrayList<String> cookie = db.getCookies();
 		for(String name : cookie){
 			nameListModel.addElement(name);
@@ -136,28 +134,17 @@ public class BakingPane extends BasicPane {
 	 * A class that listens for clicks in the name list.
 	 */
 	class CookieSelectionListener implements ListSelectionListener {
-		/**
-		 * Called when the user selects a name in the name list. Fetches
-		 * performance dates from the database and displays them in the date
-		 * list.
-		 * 
-		 * @param e
-		 *            The selected list item.
-		 */
 		public void valueChanged(ListSelectionEvent e) {
 			if (cookieList.isSelectionEmpty()) {
 				return;
 			}
 			String cookieName = cookieList.getSelectedValue();
-			/* --- insert own code here --- */
 			clearFields();
 			ArrayList<Ingredient> ingr = db.getIngredients(cookieName);
 			for(Ingredient i : ingr){
-				topField.add(new JLabel(i.iName + "(amount*15*10*36=" + Integer.toString(i.iAmount*15*10*36)));
-				/*s. The cookies are quick frozen and packaged
-				in bags, with 15 cookies in each bag. The bags are put in boxes, with 10 bags in each box.
-				The boxes are stacked on loading pallets, which are shrink-wrapped in plastic and labeled
-				with bar code labels. Each pallet contains 36 boxes, all containing the same product.*/
+				topField.add(new JLabel(i.iName + "(amount*15*10*36) = " + Integer.toString(i.iAmount*15*10*36)));
+				// 15 cookies in each bag, with 10 bags in each box, each pallet contains 36 boxes.
+				//Maybe show how much we have in total of each ingr?
 			}
 		}
 	}

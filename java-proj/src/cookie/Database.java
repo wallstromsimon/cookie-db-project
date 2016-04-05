@@ -115,7 +115,7 @@ public class Database {
 	}
 
 	public Ingredient getIngredient(String ingrName) {
-		return new Ingredient("Adam", 10000000);
+		return new Ingredient(ingrName, 10000000);
 	}
 
 	

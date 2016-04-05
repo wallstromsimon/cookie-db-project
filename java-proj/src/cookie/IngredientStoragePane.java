@@ -69,7 +69,7 @@ public class IngredientStoragePane extends BasicPane {
 	}
 
 	/**
-	 * Perform the entry actions of this pane: clear all fields, fetch the movie
+	 * Perform the entry actions of this pane: clear all fields, fetch the 
 	 * names from the database and display them in the name list.
 	 */
 	public void entryActions() {
