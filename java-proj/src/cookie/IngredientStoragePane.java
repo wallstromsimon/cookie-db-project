@@ -31,7 +31,7 @@ public class IngredientStoragePane extends BasicPane {
 		ingrList.addListSelectionListener(new CookieSelectionListener());
 		JScrollPane p1 = new JScrollPane(ingrList);
 		JPanel p = new JPanel();
-		p.setLayout(new GridLayout(1, 2));
+		p.setLayout(new GridLayout(1, 1)); //1,2 från början
 		p.add(p1);
 		return p;
 	}

@@ -52,7 +52,7 @@ public class CookieGUI {
 		tabbedPane.addChangeListener(new ChangeHandler());
 		frame.addWindowListener(new WindowHandler());
 
-		frame.setSize(500, 400);
+		frame.setSize(600, 600);
 		frame.setVisible(true);
 
 		/* --- change code here --- */
