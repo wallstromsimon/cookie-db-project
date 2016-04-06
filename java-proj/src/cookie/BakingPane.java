@@ -116,11 +116,8 @@ public class BakingPane extends BasicPane {
 
 			String cookieName = cookieList.getSelectedValue(); //Needed for db
 
-			boolean baked = db.bakePallet(cookieName);
-
-			if(baked){ //  enough ingredients
+			if(db.bakePallet(cookieName)){ //  enough ingredients
 				displayMessage("BAKE THAT COOKIE BITCH");
-				//DB call to update ingredient list and pallet storage
 			}else{
 				displayMessage("Baking unsuccessfull, ingredients unavailable");
 			}

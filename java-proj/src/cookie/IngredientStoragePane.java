@@ -17,12 +17,6 @@ public class IngredientStoragePane extends BasicPane {
 		super(db);
 	}
 
-	/**
-	 * Create the left panel, containing the movie name list and the performance
-	 * date list.
-	 *
-	 * @return The left panel.
-	 */
 	public JComponent createLeftPanel() {
 		nameListModel = new DefaultListModel<String>();
 		ingrList = new JList<String>(nameListModel);
@@ -36,14 +30,10 @@ public class IngredientStoragePane extends BasicPane {
 		return p;
 	}
 
-	/**
-	 * Create the top panel, containing the fields with the performance data.
-	 *
-	 * @return The top panel.
-	 */
 	public JComponent createTopPanel() {
 		topField = new JPanel();
 		topField.setLayout(new BoxLayout(topField, BoxLayout.PAGE_AXIS));
+//		Gridlayout?? and always display?
 
 		JPanel p1 = new JPanel();
 		p1.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -55,31 +45,18 @@ public class IngredientStoragePane extends BasicPane {
 		return p;
 	}
 
-	/**
-	 * Create the bottom panel, containing the book ticket-button and the
-	 * message line.
-	 *
-	 * @return The bottom panel.
-	 */
 	public JComponent createBottomPanel() {
 		JButton[] buttons = new JButton[0];
 		return new ButtonAndMessagePanel(buttons, messageLabel,
 				new ActionHandler());
 	}
 
-	/**
-	 * Perform the entry actions of this pane: clear all fields, fetch the
-	 * names from the database and display them in the name list.
-	 */
 	public void entryActions() {
 		clearMessage();
 		fillNameList();
 		clearFields();
 	}
 
-	/**
-	 * Fetch cookie names from the database and display them in the name list.
-	 */
 	private void fillNameList() {
 		nameListModel.removeAllElements();
 		/* --- insert own code here --- */
@@ -89,17 +66,11 @@ public class IngredientStoragePane extends BasicPane {
 		}
 	}
 
-	/**
-	 * Clear all text fields.
-	 */
 	private void clearFields() {
 		topField.removeAll();
 		topField.revalidate();
 	}
 
-	/**
-	 * A class that listens for clicks in the name list.
-	 */
 	class CookieSelectionListener implements ListSelectionListener {
 		public void valueChanged(ListSelectionEvent e) {
 			if (ingrList.isSelectionEmpty()) {
@@ -112,9 +83,6 @@ public class IngredientStoragePane extends BasicPane {
 		}
 	}
 
-	/**
-	 * A class that listens for button clicks.
-	 */
 	class ActionHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
 			//Not needed here, but still needed for button msg.

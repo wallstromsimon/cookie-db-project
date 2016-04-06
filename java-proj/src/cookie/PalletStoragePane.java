@@ -16,40 +16,16 @@ import java.util.ArrayList;
  */
 public class PalletStoragePane extends BasicPane {
 	private static final long serialVersionUID = 1;
-
-	/**
-	 * The list model for the movie name list.
-	 */
 	private DefaultListModel<String> nameListModel;
-
-	/**
-	 * The cookie name list.
-	 */
 	private JList<String> palletList;
-
-	//JPanel for Top
 	private JPanel topField;
 
-
-	/**
-	 * Create the booking pane.
-	 *
-	 * @param db
-	 *            The database object.
-	 */
 	public PalletStoragePane(Database db) {
 		super(db);
 	}
 
-	/**
-	 * Create the left panel, containing the movie name list and the performance
-	 * date list.
-	 *
-	 * @return The left panel.
-	 */
 	public JComponent createLeftPanel() {
 		nameListModel = new DefaultListModel<String>();
-
 		palletList = new JList<String>(nameListModel);
 		palletList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		palletList.setPrototypeCellValue("123456789012");
@@ -61,11 +37,6 @@ public class PalletStoragePane extends BasicPane {
 		return p;
 	}
 
-	/**
-	 * Create the top panel, containing the fields with the performance data.
-	 *
-	 * @return The top panel.
-	 */
 	public JComponent createTopPanel() {
 		topField = new JPanel();
 		topField.setLayout(new BoxLayout(topField, BoxLayout.PAGE_AXIS));
@@ -81,12 +52,6 @@ public class PalletStoragePane extends BasicPane {
 		return p;
 	}
 
-	/**
-	 * Create the bottom panel, containing the book ticket-button and the
-	 * message line.
-	 *
-	 * @return The bottom panel.
-	 */
 	public JComponent createBottomPanel() {
 		JButton[] buttons = new JButton[1];
 		buttons[0] = new JButton("BLOCK??");
@@ -94,54 +59,31 @@ public class PalletStoragePane extends BasicPane {
 				new ActionHandler());
 	}
 
-	/**
-	 * Perform the entry actions of this pane: clear all fields, fetch the movie
-	 * names from the database and display them in the name list.
-	 */
 	public void entryActions() {
 		clearMessage();
 		fillNameList();
 		clearFields();
 	}
 
-	/**
-	 * Fetch cookie names from the database and display them in the name list.
-	 */
 	private void fillNameList() {
 		nameListModel.removeAllElements();
-		/* --- insert own code here --- */
 		ArrayList<Pallet> pa = db.getPalletList();
 		for(Pallet p : pa){
 			nameListModel.addElement(p.palletID + " : " + p.cName);
 		}
 	}
 
-	/**
-	 * Clear all text fields.
-	 */
 	private void clearFields() {
 		topField.removeAll();
 		topField.revalidate();
 	}
 
-	/**
-	 * A class that listens for clicks in the name list.
-	 */
 	class CookieSelectionListener implements ListSelectionListener {
-		/**
-		 * Called when the user selects a name in the name list. Fetches
-		 * performance dates from the database and displays them in the date
-		 * list.
-		 *
-		 * @param e
-		 *            The selected list item.
-		 */
 		public void valueChanged(ListSelectionEvent e) {
 			if (palletList.isSelectionEmpty()) {
 				return;
 			}
 			String pIDcName = palletList.getSelectedValue();
-			/* --- insert own code here --- */
 			clearFields();
 			ArrayList<Pallet> pa = db.getPalletList(); //Change this to get amount for one ingr?
 			for(Pallet p : pa){
@@ -155,18 +97,7 @@ public class PalletStoragePane extends BasicPane {
 		}
 	}
 
-	/**
-	 * A class that listens for button clicks.
-	 */
 	class ActionHandler implements ActionListener {
-		/**
-		 * Called when the user clicks the Book ticket button. Books a ticket
-		 * for the current user to the selected performance (adds a booking to
-		 * the database).
-		 *
-		 * @param e
-		 *            The event object (not used).
-		 */
 		public void actionPerformed(ActionEvent e) {
 			if (palletList.isSelectionEmpty()) {
 				return;
@@ -176,13 +107,12 @@ public class PalletStoragePane extends BasicPane {
 				return;
 			}
 
-			String cookieName = palletList.getSelectedValue(); //Needed for db
+			String pallet = palletList.getSelectedValue(); //Needed for db
 
-			if(true){ //  enough ingredients
-				displayMessage("Nothing");
-				//DB call to update ingredient list and pallet storage
+			if(db.block(pallet)){ 
+				displayMessage("Blocked?");
 			}else{
-				displayMessage("Nothing");
+				displayMessage("Unblocked?");
 			}
 		}
 	}

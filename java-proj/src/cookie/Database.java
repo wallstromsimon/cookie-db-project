@@ -99,8 +99,6 @@ public class Database {
 
 	public ArrayList<Ingredient> getIngredientList(){
 		//SQL to get all ingredients
-
-
 		ArrayList<Ingredient> ingredientList = new ArrayList<Ingredient>();
 		Statement listIngredient = null;
 		try {
@@ -126,9 +124,9 @@ public class Database {
 		Statement listIngredient = null;
 		try {
 			listIngredient = conn.createStatement();
-			ResultSet ingredients = listIngredient.executeQuery("SELECT * FROM Ingredient");
+			ResultSet ingredients = listIngredient.executeQuery("SELECT * FROM RecipeItem WHERE CookieName = '" + cookieName + "'");
 			while (ingredients.next()) {
-				ingredientList.add(new Ingredient(ingredients.getString("IngredientName"), ingredients.getInt("AmountLeft")));
+				ingredientList.add(new Ingredient(ingredients.getString("IngredientName"), ingredients.getInt("Amount")));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -152,7 +150,24 @@ public class Database {
 	}
 
 	public Ingredient getIngredient(String ingrName) {
-		return new Ingredient(ingrName, 10000000);
+		Ingredient ingr = null;
+		Statement listIngredient = null;
+		try {
+			listIngredient = conn.createStatement();
+			ResultSet ingredients = listIngredient.executeQuery("SELECT * FROM Ingredient WHERE IngredientName = '" + ingrName + "'");
+			while (ingredients.next()) {
+				ingr = new Ingredient(ingredients.getString("IngredientName"), ingredients.getInt("AmountLeft"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			try {
+				listIngredient.close();                       //<-------------------Close like this!
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return ingr;
 	}
 
 	public boolean bakePallet(String cookieName) {
@@ -161,6 +176,11 @@ public class Database {
 		//Update Ingr storage
 		//Make new Pallet with cookieName as cookie type
 		return true;
+	}
+
+	public boolean block(String pallet) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 
