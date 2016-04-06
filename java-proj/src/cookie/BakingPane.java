@@ -144,7 +144,7 @@ public class BakingPane extends BasicPane {
 			for(Ingredient i : ingr){
 				topField.add(new JLabel(i.iName + "(amount*15*10*36) = " + Integer.toString(i.iAmount*15*10*36)));
 				// 15 cookies in each bag, with 10 bags in each box, each pallet contains 36 boxes.
-				//Maybe show how much we have in total of each ingr?
+				// Maybe show how much we have in total of each ingr?
 			}
 		}
 	}
@@ -172,7 +172,9 @@ public class BakingPane extends BasicPane {
 			
 			String cookieName = cookieList.getSelectedValue(); //Needed for db
 			
-			if(true){ //  enough ingredients
+			boolean baked = db.bakePallet(cookieName);
+			
+			if(baked){ //  enough ingredients
 				displayMessage("BAKE THAT COOKIE BITCH");
 				//DB call to update ingredient list and pallet storage
 			}else{

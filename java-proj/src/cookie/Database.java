@@ -118,6 +118,14 @@ public class Database {
 		return new Ingredient(ingrName, 10000000);
 	}
 
+	public boolean bakePallet(String cookieName) {
+		//Check if there is enough Ingr in storage to bake a pallet 
+		// (15 cookies in each bag, with 10 bags in each box, each pallet contains 36 boxes.)
+		//Update Ingr storage
+		//Make new Pallet with cookieName as cookie type
+		return true;
+	}
+
 	
 	
 
