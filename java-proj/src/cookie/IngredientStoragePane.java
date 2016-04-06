@@ -109,9 +109,6 @@ public class IngredientStoragePane extends BasicPane {
 			clearFields();
 			Ingredient i = db.getIngredient(ingrName);
 			topField.add(new JLabel("We have " + Integer.toString(i.iAmount) + " *units* of " + i.iName +"."));
-			if(i.iAmount > 90000){
-				topField.add(new JLabel("Over nine thousand!"));
-			}
 		}
 	}
 

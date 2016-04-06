@@ -38,6 +38,7 @@ public class BasicPane extends JPanel {
         setLayout(new BorderLayout());
                 
         JComponent leftPanel = createLeftPanel();
+		leftPanel.setPreferredSize(new Dimension(200,600));
         add(leftPanel, BorderLayout.WEST);
                 
         JPanel rightPanel = new JPanel();
