@@ -58,10 +58,10 @@ public class CookieGUI {
 		/* --- change code here --- */
 		/* --- change xxx to your user name, yyy to your password --- */
 		if (db.openConnection("db85", "bil123!")) {
+			ingredientStoragePane.entryActions();
 			ingredientStoragePane.displayMessage("Connected to database");
 		} else {
 			ingredientStoragePane.displayMessage("Could not connect to database");
-			System.exit(1);
 		}
 	}
 
