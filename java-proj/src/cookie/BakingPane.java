@@ -30,26 +30,25 @@ public class BakingPane extends BasicPane {
 	 * The cookie name list.
 	 */
 	private JList<String> cookieList;
-	
+
 	//JPanel for Top
-	private JPanel topField;  
+	private JPanel topField;
 
 
 	/**
 	 * Create the booking pane.
-	 * 
+	 *
 	 * @param db
 	 *            The database object.
 	 */
 	public BakingPane(Database db) {
 		super(db);
-		entryActions();
 	}
 
 	/**
 	 * Create the left panel, containing the movie name list and the performance
 	 * date list.
-	 * 
+	 *
 	 * @return The left panel.
 	 */
 	public JComponent createLeftPanel() {
@@ -69,13 +68,13 @@ public class BakingPane extends BasicPane {
 
 	/**
 	 * Create the top panel, containing the fields with the performance data.
-	 * 
+	 *
 	 * @return The top panel.
 	 */
 	public JComponent createTopPanel() {
 		topField = new JPanel();
 		topField.setLayout(new BoxLayout(topField, BoxLayout.PAGE_AXIS));
-		
+
 		JPanel p1 = new JPanel();
 		p1.setLayout(new FlowLayout(FlowLayout.LEFT));
 		p1.add(new JLabel("Ingredients needed for a pallet:"));
@@ -91,7 +90,7 @@ public class BakingPane extends BasicPane {
 	/**
 	 * Create the bottom panel, containing the book ticket-button and the
 	 * message line.
-	 * 
+	 *
 	 * @return The bottom panel.
 	 */
 	public JComponent createBottomPanel() {
@@ -157,7 +156,7 @@ public class BakingPane extends BasicPane {
 		 * Called when the user clicks the Book ticket button. Books a ticket
 		 * for the current user to the selected performance (adds a booking to
 		 * the database).
-		 * 
+		 *
 		 * @param e
 		 *            The event object (not used).
 		 */
@@ -169,11 +168,11 @@ public class BakingPane extends BasicPane {
 				displayMessage("No database connection");
 				return;
 			}
-			
+
 			String cookieName = cookieList.getSelectedValue(); //Needed for db
-			
+
 			boolean baked = db.bakePallet(cookieName);
-			
+
 			if(baked){ //  enough ingredients
 				displayMessage("BAKE THAT COOKIE BITCH");
 				//DB call to update ingredient list and pallet storage

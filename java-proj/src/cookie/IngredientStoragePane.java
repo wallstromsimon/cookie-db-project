@@ -11,17 +11,16 @@ public class IngredientStoragePane extends BasicPane {
 	private static final long serialVersionUID = 1;
 	private DefaultListModel<String> nameListModel;
 	private JList<String> ingrList;
-	private JPanel topField;  
+	private JPanel topField;
 
 	public IngredientStoragePane(Database db) {
 		super(db);
-		entryActions();
 	}
 
 	/**
 	 * Create the left panel, containing the movie name list and the performance
 	 * date list.
-	 * 
+	 *
 	 * @return The left panel.
 	 */
 	public JComponent createLeftPanel() {
@@ -39,13 +38,13 @@ public class IngredientStoragePane extends BasicPane {
 
 	/**
 	 * Create the top panel, containing the fields with the performance data.
-	 * 
+	 *
 	 * @return The top panel.
 	 */
 	public JComponent createTopPanel() {
 		topField = new JPanel();
 		topField.setLayout(new BoxLayout(topField, BoxLayout.PAGE_AXIS));
-		
+
 		JPanel p1 = new JPanel();
 		p1.setLayout(new FlowLayout(FlowLayout.LEFT));
 
@@ -59,7 +58,7 @@ public class IngredientStoragePane extends BasicPane {
 	/**
 	 * Create the bottom panel, containing the book ticket-button and the
 	 * message line.
-	 * 
+	 *
 	 * @return The bottom panel.
 	 */
 	public JComponent createBottomPanel() {
@@ -69,7 +68,7 @@ public class IngredientStoragePane extends BasicPane {
 	}
 
 	/**
-	 * Perform the entry actions of this pane: clear all fields, fetch the 
+	 * Perform the entry actions of this pane: clear all fields, fetch the
 	 * names from the database and display them in the name list.
 	 */
 	public void entryActions() {

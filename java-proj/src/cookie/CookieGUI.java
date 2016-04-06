@@ -24,7 +24,7 @@ public class CookieGUI {
 
 	/**
 	 * Create a GUI object and connect to the database.
-	 * 
+	 *
 	 * @param db
 	 *            The database.
 	 */
@@ -37,7 +37,7 @@ public class CookieGUI {
 		IngredientStoragePane ingredientStoragePane = new IngredientStoragePane(db);
 		tabbedPane.addTab("Storage", null, ingredientStoragePane,
 				"store that sugar");
-		
+
 		BakingPane bakingPane = new BakingPane(db);
 		tabbedPane.addTab("Bake", null, bakingPane,
 				"Bake ffs");
@@ -61,6 +61,7 @@ public class CookieGUI {
 			ingredientStoragePane.displayMessage("Connected to database");
 		} else {
 			ingredientStoragePane.displayMessage("Could not connect to database");
+			System.exit(1);
 		}
 	}
 
@@ -71,7 +72,7 @@ public class CookieGUI {
 		/**
 		 * Called when the user switches panes. The entry actions of the new
 		 * pane are performed.
-		 * 
+		 *
 		 * @param e
 		 *            The change event (not used).
 		 */
@@ -90,7 +91,7 @@ public class CookieGUI {
 		/**
 		 * Called when the user exits the application. Closes the connection to
 		 * the database.
-		 * 
+		 *
 		 * @param e
 		 *            The window event (not used).
 		 */

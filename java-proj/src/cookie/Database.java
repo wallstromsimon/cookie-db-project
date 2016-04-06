@@ -25,7 +25,7 @@ public class Database {
 	/**
 	 * Open a connection to the database, using the specified user name and
 	 * password.
-	 * 
+	 *
 	 * @param userName
 	 *            The user name.
 	 * @param password
@@ -65,46 +65,83 @@ public class Database {
 
 	/**
 	 * Check if the connection to the database has been established
-	 * 
+	 *
 	 * @return true if the connection has been established
 	 */
 	public boolean isConnected() {
 		return conn != null;
 	}
-	
+
 	/* --- insert own code here --- remember to close conn!*/
 
 	public ArrayList<String> getCookies(){
 		//SQL To get name of all cookies.
-		ArrayList<String> cList = new ArrayList<String>();
-		cList.add("Kaka0");
-		cList.add("Kaka1");
-		cList.add("Kaka2");
-		cList.add("Kaka3");
-		return cList;
+
+		ArrayList<String> cookieList = new ArrayList<String>();
+		Statement listCookie = null;
+		try {
+			listCookie = conn.createStatement();
+			ResultSet cookies = listCookie.executeQuery("SELECT cookieName FROM Cookie");
+			while (cookies.next()) {
+				cookieList.add(cookies.getString("cookieName"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			try {
+				listCookie.close();                       //<-------------------Close like this!
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return cookieList;
 	}
 
-	public ArrayList<Ingredient> getIngredients(String cookieName){
+	public ArrayList<Ingredient> getIngredientList(){
 		//SQL to get all ingredients
-		ArrayList<Ingredient> ingr = new ArrayList<Ingredient>();
-		ingr.add(new Ingredient("klet", 2));
-		ingr.add(new Ingredient("smulor", 3));
-		ingr.add(new Ingredient("blod", 19));
-		ingr.add(new Ingredient("kaffe", 50000));
-		ingr.add(new Ingredient("Adam", 1));
-		return ingr;
+
+
+		ArrayList<Ingredient> ingredientList = new ArrayList<Ingredient>();
+		Statement listIngredient = null;
+		try {
+			listIngredient = conn.createStatement();
+			ResultSet ingredients = listIngredient.executeQuery("SELECT * FROM Ingredient");
+			while (ingredients.next()) {
+				ingredientList.add(new Ingredient(ingredients.getString("IngredientName"), ingredients.getInt("AmountLeft")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			try {
+				listIngredient.close();                       //<-------------------Close like this!
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return ingredientList;
 	}
-	
-	public ArrayList<Ingredient> getIngredientList() {
-		ArrayList<Ingredient> ingr = new ArrayList<Ingredient>();
-		ingr.add(new Ingredient("klet", 20900000));
-		ingr.add(new Ingredient("smulor", 300000000));
-		ingr.add(new Ingredient("blod", 1900000000));
-		ingr.add(new Ingredient("kaffe", 500000000));
-		ingr.add(new Ingredient("Adam", 10000000));
-		return ingr;
+
+	public ArrayList<Ingredient> getIngredients(String cookieName) {
+		ArrayList<Ingredient> ingredientList = new ArrayList<Ingredient>();
+		Statement listIngredient = null;
+		try {
+			listIngredient = conn.createStatement();
+			ResultSet ingredients = listIngredient.executeQuery("SELECT * FROM Ingredient");
+			while (ingredients.next()) {
+				ingredientList.add(new Ingredient(ingredients.getString("IngredientName"), ingredients.getInt("AmountLeft")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			try {
+				listIngredient.close();                       //<-------------------Close like this!
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return ingredientList;
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	public ArrayList<Pallet> getPalletList() { //Only IDs enough?
 		ArrayList<Pallet> p = new ArrayList<Pallet>();
@@ -119,15 +156,15 @@ public class Database {
 	}
 
 	public boolean bakePallet(String cookieName) {
-		//Check if there is enough Ingr in storage to bake a pallet 
+		//Check if there is enough Ingr in storage to bake a pallet
 		// (15 cookies in each bag, with 10 bags in each box, each pallet contains 36 boxes.)
 		//Update Ingr storage
 		//Make new Pallet with cookieName as cookie type
 		return true;
 	}
 
-	
-	
+
+
 
 	/* Old code below, Keep as ref and then remove
 
@@ -143,8 +180,8 @@ public class Database {
 			System.out.println("No connection to database");
 			e.printStackTrace();
 		}
-		
-		if(exists){ 
+
+		if(exists){
 //			CurrentUser.instance().loginAs(userId);
 		}else{
 //			CurrentUser.instance().loginAs(null);
@@ -172,7 +209,7 @@ public class Database {
 		}
 		return movieList;
 	}
-	
+
 	public ArrayList<String> getDates(String movieName) {
 		ArrayList<String> dateList = new ArrayList<String>();
 		try {
@@ -187,7 +224,7 @@ public class Database {
 		}
 		return dateList;
 	}
-	
+
 	public Performance getPerformance(String mName, String date) {
 		try {
 			Statement theaterSQL = conn.createStatement();

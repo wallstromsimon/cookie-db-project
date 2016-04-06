@@ -26,26 +26,25 @@ public class PalletStoragePane extends BasicPane {
 	 * The cookie name list.
 	 */
 	private JList<String> palletList;
-	
+
 	//JPanel for Top
-	private JPanel topField;  
+	private JPanel topField;
 
 
 	/**
 	 * Create the booking pane.
-	 * 
+	 *
 	 * @param db
 	 *            The database object.
 	 */
 	public PalletStoragePane(Database db) {
 		super(db);
-		entryActions();
 	}
 
 	/**
 	 * Create the left panel, containing the movie name list and the performance
 	 * date list.
-	 * 
+	 *
 	 * @return The left panel.
 	 */
 	public JComponent createLeftPanel() {
@@ -64,13 +63,13 @@ public class PalletStoragePane extends BasicPane {
 
 	/**
 	 * Create the top panel, containing the fields with the performance data.
-	 * 
+	 *
 	 * @return The top panel.
 	 */
 	public JComponent createTopPanel() {
 		topField = new JPanel();
 		topField.setLayout(new BoxLayout(topField, BoxLayout.PAGE_AXIS));
-		
+
 		JPanel p1 = new JPanel();
 		p1.setLayout(new FlowLayout(FlowLayout.LEFT));
 		//p1.add(new JLabel("Ingredients needed for a pallet:"));
@@ -85,7 +84,7 @@ public class PalletStoragePane extends BasicPane {
 	/**
 	 * Create the bottom panel, containing the book ticket-button and the
 	 * message line.
-	 * 
+	 *
 	 * @return The bottom panel.
 	 */
 	public JComponent createBottomPanel() {
@@ -133,7 +132,7 @@ public class PalletStoragePane extends BasicPane {
 		 * Called when the user selects a name in the name list. Fetches
 		 * performance dates from the database and displays them in the date
 		 * list.
-		 * 
+		 *
 		 * @param e
 		 *            The selected list item.
 		 */
@@ -164,7 +163,7 @@ public class PalletStoragePane extends BasicPane {
 		 * Called when the user clicks the Book ticket button. Books a ticket
 		 * for the current user to the selected performance (adds a booking to
 		 * the database).
-		 * 
+		 *
 		 * @param e
 		 *            The event object (not used).
 		 */
@@ -176,9 +175,9 @@ public class PalletStoragePane extends BasicPane {
 				displayMessage("No database connection");
 				return;
 			}
-			
+
 			String cookieName = palletList.getSelectedValue(); //Needed for db
-			
+
 			if(true){ //  enough ingredients
 				displayMessage("Nothing");
 				//DB call to update ingredient list and pallet storage
