@@ -79,7 +79,7 @@ public class IngredientStoragePane extends BasicPane {
 			String ingrName = ingrList.getSelectedValue();
 			clearFields();
 			Ingredient i = db.getIngredient(ingrName);
-			topField.add(new JLabel("We have " + Integer.toString(i.iAmount) + " *units* of " + i.iName +"."));
+			topField.add(new JLabel("We have " + Integer.toString(i.iAmount) + " 'units' of " + i.iName +"."));
 		}
 	}
 

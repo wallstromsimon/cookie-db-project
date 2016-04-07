@@ -9,13 +9,13 @@ drop table if exists Customer;
 drop table if exists OrderedItem;
 
 
-create table Ingredient(
+CREATE TABLE Ingredient(
     IngredientName  varchar(30),
     AmountLeft      int not null,
     primary key (IngredientName)
     );
 
-create table RecipeItem(
+CREATE TABLE RecipeItem(
     CookieName      varchar(30) not null,
     IngredientName  varchar(30) not null,
     Amount          int not null,
@@ -25,12 +25,12 @@ create table RecipeItem(
     constraint uniqueNames unique (CookieName, IngredientName)
     );
 
-create table Cookie(
+CREATE TABLE Cookie(
     CookieName  varchar(30),
     primary key (CookieName)
     );
 
-create table DeliverdItem(
+CREATE TABLE DeliverdItem(
     PalletID        int,
     OrderID         int,
     CustomerName    varchar(30),
@@ -40,7 +40,7 @@ create table DeliverdItem(
     foreign key (OrderID) references Orders(OrderID)
     );
 
-create table Pallet(
+CREATE TABLE Pallet(
     PalletID    int AUTO_INCREMENT,
     CookieName  varchar(30) not null,
     DateMade    date,
@@ -49,13 +49,13 @@ create table Pallet(
     foreign key (CookieName) references Cookie(CookieName)
     );
 
-create table Customer(
+CREATE TABLE Customer(
     UserName    varchar(30),
     Address     varchar(30) not null,
     primary key (UserName)
     );
 
-create table Orders(
+CREATE TABLE Orders(
     OrderID         int AUTO_INCREMENT,
     Customer        varchar(30),
     DeliveryDate    date,
@@ -63,7 +63,7 @@ create table Orders(
     foreign key (Customer) references Customer(UserName)
     );
 
-create table OrderedItem(
+CREATE TABLE OrderedItem(
     OrderID         int,
     CookieName      varchar(30),
     NbrPallets      int not null,

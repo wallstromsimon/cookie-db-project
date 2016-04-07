@@ -35,15 +35,16 @@ public class CookieGUI {
 		tabbedPane = new JTabbedPane();
 
 		IngredientStoragePane ingredientStoragePane = new IngredientStoragePane(db);
-		tabbedPane.addTab("Storage", null, ingredientStoragePane,
-				"store that sugar");
+		tabbedPane.addTab("Storage", null, ingredientStoragePane, "store that sugar");
 
 		BakingPane bakingPane = new BakingPane(db);
-		tabbedPane.addTab("Bake", null, bakingPane,
-				"Bake ffs");
+		tabbedPane.addTab("Bake Pallet", null, bakingPane, "Bake");
 
 		PalletStoragePane palletStoragePane = new PalletStoragePane(db);
-		tabbedPane.addTab("Pallet storage", null, palletStoragePane, "Store a pallet");
+		tabbedPane.addTab("Pallet storage", null, palletStoragePane, "Pallet storage");
+		
+		OrderPane orderPane = new OrderPane(db);
+		tabbedPane.addTab("Order overview", null, orderPane, "View orders");
 
 		tabbedPane.setSelectedIndex(0);
 

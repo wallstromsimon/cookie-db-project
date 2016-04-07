@@ -1,8 +1,11 @@
 package cookie;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 
 /**
  * Database is a class that specifies the interface to the movie database. Uses
@@ -140,13 +143,25 @@ public class Database {
 		return ingredientList;
 	}
 
-	@SuppressWarnings("deprecation")
 	public ArrayList<Pallet> getPalletList() { //Only IDs enough?
-		ArrayList<Pallet> p = new ArrayList<Pallet>();
-		p.add(new Pallet(0, "Kaka0", new Date(2016, 2, 2), false));
-		p.add(new Pallet(1, "Kaka2", new Date(2016, 4, 2), false));
-		p.add(new Pallet(2, "Kaka5", new Date(2016, 5, 2), false));
-		return p;
+		ArrayList<Pallet> pList = new ArrayList<Pallet>();
+		Statement listIngredient = null;
+		try {
+			listIngredient = conn.createStatement();
+			ResultSet pl = listIngredient.executeQuery("SELECT * FROM Pallet");
+			while (pl.next()) {
+				pList.add(new Pallet(pl.getInt("PalletID"), pl.getString("CookieName"), pl.getDate("DateMade"), pl.getBoolean("Blocked")));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			try {
+				listIngredient.close();                       //<-------------------Close like this!
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return pList;
 	}
 
 	public Ingredient getIngredient(String ingrName) {
@@ -171,16 +186,67 @@ public class Database {
 	}
 
 	public boolean bakePallet(String cookieName) {
-		//Check if there is enough Ingr in storage to bake a pallet
+		// Check if there is enough Ingr in storage to bake a pallet
 		// (15 cookies in each bag, with 10 bags in each box, each pallet contains 36 boxes.)
-		//Update Ingr storage
-		//Make new Pallet with cookieName as cookie type
-		return true;
+		// Update Ingr storage
+		// Make new Pallet with cookieName as cookie type
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		Statement transaction = null;
+		boolean baked = false;
+		try {
+			conn.setAutoCommit(false); //Does this affect getIngredient() ?
+			
+			ArrayList<Ingredient> in = getIngredients(cookieName);
+			LinkedList<Integer> diff = new LinkedList<Integer>();
+			
+			for(Ingredient i : in){
+				Ingredient storage = getIngredient(i.iName);
+				// 15 cookies in each bag, with 10 bags in each box, each pallet contains 36 boxes.
+				if((i.iAmount*15*10*36) > storage.iAmount){
+					//rollback?? :O
+					return false;
+				}else{
+					diff.add(storage.iAmount - (i.iAmount*15*10*36));
+				}
+			}
+			
+			transaction = conn.createStatement();
+			
+			for(Ingredient i : in){
+				transaction.executeUpdate("UPDATE Ingredient SET AmountLeft = " + diff.remove() + " WHERE IngredientName = '" + i.iName + "'");
+
+			}
+			transaction.executeUpdate("INSERT into Pallet values(0, '" + cookieName + "', '" + dateFormat.format(new Date()) + " " + "', '" + 0 + "')");
+			conn.commit();
+			baked = true;
+			//conn.rollback(); 
+			conn.setAutoCommit(true);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally{
+			try {
+				transaction.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return baked;
 	}
 
 	public boolean block(String pallet) {
-		// TODO Auto-generated method stub
+		// Block update a pallet to blocked.
 		return false;
+	}
+
+	public ArrayList<Integer> getOrderNbrs() {
+		// Return arralist with all order nbrs
+		return null;
+	}
+
+	public Order getOrderInfo(int oID) {
+		// return a order obj with oID
+		return null;
 	}
 
 
