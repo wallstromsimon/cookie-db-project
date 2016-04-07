@@ -79,10 +79,13 @@ public class OrderPane extends BasicPane {
 			clearFields();
 			Order o = db.getOrderInfo(oID); //Change this to get amount for one ingr?
 			topField.add(new JLabel("Order: " + Integer.toString(o.orderID)));
-			topField.add(new JLabel("Delivery Date: " + o.dDate.toString()));
-			topField.add(new JLabel("Deliver to: " + o.uName));	
-			topField.add(new JLabel("Deliver to: " + o.address));
-			topField.add(new JLabel("lot of items..."));
+			topField.add(new JLabel("Delivery Date: " + o.dDate));
+			topField.add(new JLabel("Deliver to: " + o.uName + ": " + o.address));	
+			topField.add(new JLabel("    "));
+			topField.add(new JLabel("Order includes: "));
+			for(String s : o.oItems.keySet()){
+				topField.add(new JLabel(o.oItems.get(s) + "st " + s));
+			}
 		}
 	}
 

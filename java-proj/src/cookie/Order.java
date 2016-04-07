@@ -1,16 +1,16 @@
 package cookie;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.Map;
 
 public class Order {
 	public int orderID;
 	public String uName;
-	public Date dDate;
+	public String dDate;
 	public String address;
-	public ArrayList<Pallet> oItems;
+	public Map<String, Integer> oItems;
 	
-	public Order(int orderID, String uName, Date dDate, String address, ArrayList<Pallet> oItems){
+	public Order(int orderID, String uName, String dDate, String address, Map<String, Integer> oItems){
 		this.orderID = orderID;
 		this.uName = uName;
 		this.dDate = dDate;

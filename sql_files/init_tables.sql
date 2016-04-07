@@ -71,3 +71,12 @@ values ('Flour', 2147483646),
         ('Chopped almonds', 2147483646),
         ('Cinnamon', 2147483646),
         ('Vanilla sugar', 2147483646);
+
+insert into Customer (UserNAme,Address)
+values ('Simon', 'Lund');
+
+insert into Orders (OrderID,Customer,DeliveryDate)
+values (0,'Simon', '2016-05-05');
+
+insert into OrderedItem(OrderID,CookieName,NbrPallets)
+values (1, 'Berliner', 1337);

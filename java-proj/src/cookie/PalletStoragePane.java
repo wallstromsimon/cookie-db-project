@@ -91,7 +91,7 @@ public class PalletStoragePane extends BasicPane {
 					topField.add(new JLabel("Pallet " + Integer.toString(p.palletID)));
 					topField.add(new JLabel("Made: " + p.made.toString()));
 					topField.add(new JLabel("Contains: " + p.cName));
-					topField.add(new JLabel("Blocked: " ));
+					topField.add(new JLabel("Blocked: " + p.blocked));
 				}
 			}
 		}
@@ -108,11 +108,15 @@ public class PalletStoragePane extends BasicPane {
 			}
 
 			String pallet = palletList.getSelectedValue(); //Needed for db
-
-			if(db.block(pallet)){ 
-				displayMessage("Blocked?");
+			//pallet is on p.palletID + " : " + p.cName form...
+			String[] IDnName = pallet.split(" : ");
+			
+			
+			
+			if(db.block(IDnName[0])){ 
+				displayMessage("Pallet blocked");
 			}else{
-				displayMessage("Unblocked?");
+				displayMessage("Not blocked");
 			}
 		}
 	}

@@ -5,7 +5,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 
 /**
  * Database is a class that specifies the interface to the movie database. Uses
@@ -170,7 +172,7 @@ public class Database {
 		try {
 			listIngredient = conn.createStatement();
 			ResultSet ingredients = listIngredient.executeQuery("SELECT * FROM Ingredient WHERE IngredientName = '" + ingrName + "'");
-			while (ingredients.next()) {
+			while (ingredients.next()) { //if??
 				ingr = new Ingredient(ingredients.getString("IngredientName"), ingredients.getInt("AmountLeft"));
 			}
 		} catch (SQLException e) {
@@ -234,19 +236,93 @@ public class Database {
 		return baked;
 	}
 
-	public boolean block(String pallet) {
+	public boolean block(String palletID) {
 		// Block update a pallet to blocked.
-		return false;
+		System.out.println("block ID: " + palletID + "\n");
+		Statement transaction = null;
+		int blocked = 0;
+
+		try {
+			conn.setAutoCommit(false);
+			transaction = conn.createStatement();
+			ResultSet blockQ = transaction.executeQuery("SELECT * FROM Pallet WHERE PalletID = '" + palletID + "' FOR UPDATE");
+			blockQ.next();
+			blocked = blockQ.getInt("Blocked");
+			if(blocked == 0){ //BLOCK
+				transaction.executeUpdate("UPDATE Pallet SET Blocked = " + 1 + " WHERE PalletID = '" + palletID + "'");
+				blocked = 1;
+				conn.commit();
+			}else{
+				conn.rollback();
+			}
+			conn.setAutoCommit(true);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return blocked == 1 ? true : false;
 	}
 
 	public ArrayList<Integer> getOrderNbrs() {
-		// Return arralist with all order nbrs
-		return null;
+		// Return arrayList with all order nbrs
+		//SQL to get all ingredients
+		ArrayList<Integer> orders = new ArrayList<Integer>();
+		Statement ordQ = null;
+		try {
+			ordQ = conn.createStatement();
+			ResultSet o = ordQ.executeQuery("SELECT OrderID FROM Orders");
+			while (o.next()) {
+				orders.add(o.getInt("OrderID"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			try {
+				ordQ.close();          //<-------------------Close like this!
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return orders;
 	}
 
 	public Order getOrderInfo(int oID) {
 		// return a order obj with oID
-		return null;
+		Order order = null;
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		Statement ordQ = null;
+		try {
+			ordQ = conn.createStatement();
+			//Get order with ID
+			//Get customer info with uname from order.
+			//Get Ordered item list
+			
+			ResultSet o = ordQ.executeQuery("SELECT * FROM Orders");
+			if(o.next()){
+				int id = o.getInt("OrderID");
+				String uName = o.getString("Customer");
+				String date = o.getString("DeliveryDate");
+				ResultSet c = ordQ.executeQuery("SELECT * FROM Customer WHERE UserName = '" + uName + "'");
+				String addr = "";
+				if(c.next()){
+					addr = c.getString("Address");
+				}
+				ResultSet l = ordQ.executeQuery("SELECT * FROM OrderedItem WHERE OrderID = '" + id + "'");
+				while(l.next()){
+					map.put(l.getString("CookieName"), l.getInt("NbrPAllets"));
+				}
+				order = new Order(id, uName, date, addr, map);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally{
+			try {
+				ordQ.close();          //<-------------------Close like this!
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		return order;
 	}
 
 
