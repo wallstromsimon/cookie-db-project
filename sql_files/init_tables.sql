@@ -80,3 +80,4 @@ values (0,'Simon', '2016-05-05');
 
 insert into OrderedItem(OrderID,CookieName,NbrPallets)
 values (1, 'Berliner', 1337);
+values (1, 'Tango', 2);
