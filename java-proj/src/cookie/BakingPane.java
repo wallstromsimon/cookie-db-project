@@ -72,9 +72,9 @@ public class BakingPane extends BasicPane {
 			}
 			String cookieName = cookieList.getSelectedValue();
 			clearFields();
-			topField.add(new JLabel("Ingredients needed for a pallet of " + cookieName + ":"));
-			topField.add(new JLabel("      ")); //padd gridlayout
-			topField.add(new JLabel("      "));
+			topField.add(new JLabel("Ingredients needed for:"));
+			topField.add(new JLabel(cookieName)); 
+			topField.add(new JLabel("      "));//padd gridlayout
 			topField.add(new JLabel("      "));
 
 			ArrayList<Ingredient> ingr = db.getIngredients(cookieName);

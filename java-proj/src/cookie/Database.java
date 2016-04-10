@@ -211,6 +211,7 @@ public class Database {
 	}
 
 	public boolean block(String palletID) {
+		System.out.println("block ID: " + palletID + "\n");
 		Statement transaction = null;
 		int blocked = 0;
 
