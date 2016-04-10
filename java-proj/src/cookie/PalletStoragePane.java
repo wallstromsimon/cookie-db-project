@@ -46,7 +46,7 @@ public class PalletStoragePane extends BasicPane {
 
 	public JComponent createBottomPanel() {
 		JButton[] buttons = new JButton[1];
-		buttons[0] = new JButton("BLOCK??");
+		buttons[0] = new JButton("Block Pallet");
 		return new ButtonAndMessagePanel(buttons, messageLabel, new ActionHandler());
 	}
 
@@ -104,6 +104,7 @@ public class PalletStoragePane extends BasicPane {
 			
 			if(db.block(IDnName[0])){ 
 				displayMessage("Pallet blocked");
+				//Textfield not updated...
 			}else{
 				displayMessage("Not blocked");
 			}

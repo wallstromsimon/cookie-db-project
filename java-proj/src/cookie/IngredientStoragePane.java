@@ -46,8 +46,7 @@ public class IngredientStoragePane extends BasicPane {
 
 	public JComponent createBottomPanel() {
 		JButton[] buttons = new JButton[0];
-		return new ButtonAndMessagePanel(buttons, messageLabel,
-				new ActionHandler());
+		return new ButtonAndMessagePanel(buttons, messageLabel, new ActionHandler());
 	}
 
 	public void entryActions() {

@@ -98,7 +98,7 @@ public class BakingPane extends BasicPane {
 			}
 			String cookieName = cookieList.getSelectedValue();
 			if(db.bakePallet(cookieName)){ //  enough ingredients
-				displayMessage("BAKE THAT COOKIE BITCH");
+				displayMessage("Pallet baked");
 			}else{
 				displayMessage("Baking unsuccessfull, ingredients unavailable");
 			}

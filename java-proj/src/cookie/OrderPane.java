@@ -2,7 +2,6 @@ package cookie;
 
 import javax.swing.*;
 import javax.swing.event.*;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
@@ -45,10 +44,8 @@ public class OrderPane extends BasicPane {
 	}
 
 	public JComponent createBottomPanel() {
-		JButton[] buttons = new JButton[1];
-		buttons[0] = new JButton("BLOCK??");
-		return new ButtonAndMessagePanel(buttons, messageLabel,
-				new ActionHandler());
+		JButton[] buttons = new JButton[0];
+		return new ButtonAndMessagePanel(buttons, messageLabel, new ActionHandler());
 	}
 
 	public void entryActions() {
@@ -91,19 +88,6 @@ public class OrderPane extends BasicPane {
 
 	class ActionHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			if (orderList.isSelectionEmpty()) {
-				return;
-			}
-			if (!db.isConnected()){
-				displayMessage("No database connection");
-				return;
-			}
-			String pallet = orderList.getSelectedValue(); 
-			if(db.block(pallet)){ 
-				displayMessage("Blocked?");
-			}else{
-				displayMessage("Unblocked?");
-			}
 		}
 	}
 }
