@@ -25,7 +25,7 @@ public class IngredientStoragePane extends BasicPane {
 		ingrList.addListSelectionListener(new CookieSelectionListener());
 		JScrollPane p1 = new JScrollPane(ingrList);
 		JPanel p = new JPanel();
-		p.setLayout(new GridLayout(1, 1)); //1,2 från början
+		p.setLayout(new GridLayout(1, 1));
 		p.add(p1);
 		return p;
 	}
@@ -33,7 +33,6 @@ public class IngredientStoragePane extends BasicPane {
 	public JComponent createTopPanel() {
 		topField = new JPanel();
 		topField.setLayout(new BoxLayout(topField, BoxLayout.PAGE_AXIS));
-//		Gridlayout?? and always display?
 
 		JPanel p1 = new JPanel();
 		p1.setLayout(new FlowLayout(FlowLayout.LEFT));
@@ -59,7 +58,6 @@ public class IngredientStoragePane extends BasicPane {
 
 	private void fillNameList() {
 		nameListModel.removeAllElements();
-		/* --- insert own code here --- */
 		ArrayList<Ingredient> ingr = db.getIngredientList();
 		for(Ingredient i : ingr){
 			nameListModel.addElement(i.iName);
@@ -85,7 +83,6 @@ public class IngredientStoragePane extends BasicPane {
 
 	class ActionHandler implements ActionListener {
 		public void actionPerformed(ActionEvent e) {
-			//Not needed here, but still needed for button msg.
 		}
 	}
 }

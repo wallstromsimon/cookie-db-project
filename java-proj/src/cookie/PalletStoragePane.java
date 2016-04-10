@@ -7,13 +7,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.util.ArrayList;
 
-/**
- * The GUI pane where a user books tickets for movie performances. It contains
- * one list of movies and one of performance dates. The user selects a
- * performance by clicking in these lists. The performance data is shown in the
- * fields in the right panel. The bottom panel contains a button which the user
- * can click to book a ticket to the selected performance.
- */
 public class PalletStoragePane extends BasicPane {
 	private static final long serialVersionUID = 1;
 	private DefaultListModel<String> nameListModel;
@@ -43,7 +36,6 @@ public class PalletStoragePane extends BasicPane {
 
 		JPanel p1 = new JPanel();
 		p1.setLayout(new FlowLayout(FlowLayout.LEFT));
-		//p1.add(new JLabel("Ingredients needed for a pallet:"));
 
 		JPanel p = new JPanel();
 		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
@@ -55,8 +47,7 @@ public class PalletStoragePane extends BasicPane {
 	public JComponent createBottomPanel() {
 		JButton[] buttons = new JButton[1];
 		buttons[0] = new JButton("BLOCK??");
-		return new ButtonAndMessagePanel(buttons, messageLabel,
-				new ActionHandler());
+		return new ButtonAndMessagePanel(buttons, messageLabel, new ActionHandler());
 	}
 
 	public void entryActions() {
@@ -85,7 +76,7 @@ public class PalletStoragePane extends BasicPane {
 			}
 			String pIDcName = palletList.getSelectedValue();
 			clearFields();
-			ArrayList<Pallet> pa = db.getPalletList(); //Change this to get amount for one ingr?
+			ArrayList<Pallet> pa = db.getPalletList(); 
 			for(Pallet p : pa){
 				if(pIDcName.equals(p.palletID + " : " + p.cName)){
 					topField.add(new JLabel("Pallet " + Integer.toString(p.palletID)));
@@ -107,11 +98,9 @@ public class PalletStoragePane extends BasicPane {
 				return;
 			}
 
-			String pallet = palletList.getSelectedValue(); //Needed for db
-			//pallet is on p.palletID + " : " + p.cName form...
+			String pallet = palletList.getSelectedValue();
+			//pallet is on form: p.palletID + " : " + p.cName form...
 			String[] IDnName = pallet.split(" : ");
-			
-			
 			
 			if(db.block(IDnName[0])){ 
 				displayMessage("Pallet blocked");

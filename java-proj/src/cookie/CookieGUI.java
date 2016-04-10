@@ -6,28 +6,11 @@ import javax.swing.event.*;
 import java.awt.*;
 import java.awt.event.*;
 
-/**
- * MovieGUI is the user interface to the movie database. It sets up the main
- * window and connects to the database.
- */
 public class CookieGUI {
-	/**
-	 * db is the database object
-	 */
 	private Database db;
 
-	/**
-	 * tabbedPane is the contents of the window. It consists of two panes, User
-	 * login and Book tickets.
-	 */
 	private JTabbedPane tabbedPane;
 
-	/**
-	 * Create a GUI object and connect to the database.
-	 *
-	 * @param db
-	 *            The database.
-	 */
 	public CookieGUI(Database db) {
 		this.db = db;
 

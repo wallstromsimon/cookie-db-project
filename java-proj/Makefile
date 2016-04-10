@@ -3,7 +3,7 @@ JAVAC = javac
 
 BIN = ./bin/
 SRC = ./src/
-MAIN = cookie/MovieBooking
+MAIN = cookie/CookieFactory
 JAR = mysql-connector-java-5.1.38-bin.jar
 RUNFLAGS = -cp $(BIN):$(JAR)
 

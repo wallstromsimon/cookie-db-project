@@ -77,7 +77,7 @@ public class OrderPane extends BasicPane {
 			}
 			int oID = Integer.parseInt(orderList.getSelectedValue());
 			clearFields();
-			Order o = db.getOrderInfo(oID); //Change this to get amount for one ingr?
+			Order o = db.getOrderInfo(oID); 
 			topField.add(new JLabel("Order: " + Integer.toString(o.orderID)));
 			topField.add(new JLabel("Delivery Date: " + o.dDate));
 			topField.add(new JLabel("Deliver to: " + o.uName + ": " + o.address));	
@@ -98,9 +98,7 @@ public class OrderPane extends BasicPane {
 				displayMessage("No database connection");
 				return;
 			}
-
-			String pallet = orderList.getSelectedValue(); //Needed for db
-
+			String pallet = orderList.getSelectedValue(); 
 			if(db.block(pallet)){ 
 				displayMessage("Blocked?");
 			}else{

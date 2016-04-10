@@ -19,13 +19,11 @@ public class BakingPane extends BasicPane {
 
 	public JComponent createLeftPanel() {
 		nameListModel = new DefaultListModel<String>();
-
 		cookieList = new JList<String>(nameListModel);
 		cookieList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		cookieList.setPrototypeCellValue("123456789012");
 		cookieList.addListSelectionListener(new CookieSelectionListener());
 		JScrollPane p1 = new JScrollPane(cookieList);
-
 		JPanel p = new JPanel();
 		p.setLayout(new GridLayout(1, 2));
 		p.add(p1);
@@ -35,9 +33,7 @@ public class BakingPane extends BasicPane {
 	public JComponent createTopPanel() {
 		topField = new JPanel();
 		topField.setLayout(new FlowLayout(FlowLayout.LEFT));
-//		topField.setLayout(new BoxLayout(topField, BoxLayout.PAGE_AXIS));
 		topField.setLayout(new GridLayout(0, 2));
-
 		JPanel p = new JPanel();
 		p.setLayout(new BoxLayout(p, BoxLayout.Y_AXIS));
 		p.add(topField);
@@ -47,8 +43,7 @@ public class BakingPane extends BasicPane {
 	public JComponent createBottomPanel() {
 		JButton[] buttons = new JButton[1];
 		buttons[0] = new JButton("Bake Pallet");
-		return new ButtonAndMessagePanel(buttons, messageLabel,
-				new ActionHandler());
+		return new ButtonAndMessagePanel(buttons, messageLabel, new ActionHandler());
 	}
 
 	public void entryActions() {
@@ -87,24 +82,12 @@ public class BakingPane extends BasicPane {
 				topField.add(new JLabel(i.iName));
 				topField.add(new JLabel(Integer.toString(i.iAmount*15*10*36)));
 				// 15 cookies in each bag, with 10 bags in each box, each pallet contains 36 boxes.
-				// Maybe show how much we have in total of each ingr?
 			}
 			topField.revalidate();
 		}
 	}
 
-	/**
-	 * A class that listens for button clicks.
-	 */
 	class ActionHandler implements ActionListener {
-		/**
-		 * Called when the user clicks the Book ticket button. Books a ticket
-		 * for the current user to the selected performance (adds a booking to
-		 * the database).
-		 *
-		 * @param e
-		 *            The event object (not used).
-		 */
 		public void actionPerformed(ActionEvent e) {
 			if (cookieList.isSelectionEmpty()) {
 				return;
@@ -113,9 +96,7 @@ public class BakingPane extends BasicPane {
 				displayMessage("No database connection");
 				return;
 			}
-
-			String cookieName = cookieList.getSelectedValue(); //Needed for db
-
+			String cookieName = cookieList.getSelectedValue();
 			if(db.bakePallet(cookieName)){ //  enough ingredients
 				displayMessage("BAKE THAT COOKIE BITCH");
 			}else{
